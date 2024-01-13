@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int     @id @default(autoincrement())
+  name          String  @unique
+  email         String  @unique
+  password      String
+  trainSessions TrainSession[]
+}
+
+// reps is a string of the form n1,n2,...,nk where ni represents the number of reps made on the ith set
+
+model Exercise {
+  id            Int           @id @default(autoincrement())
+  name          String
+  reps          String
+  weight        Int?
+  trainSession  TrainSession  @relation(fields: [sessionId], references: [id])
+  sessionId     Int
+}
+
+model TrainSession {
+  id      Int         @id @default(autoincrement())
+  type    String
+  content Exercise[]
+  date    DateTime    @default(now())
+  owner   User        @relation(fields: [ownerId], references: [id])
+  ownerId Int
+}
