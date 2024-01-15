@@ -19,7 +19,7 @@ export class AuthRoutes {
         router.post('/register', authController.registerUser)
         router.post('/login', authController.loginUser)
 
-
+        // Borrar esto!
         router.get('/login-test', (req, res) => {
             console.log(req.cookies)
             if (!req.cookies.JWT) return res.json({error: 'Not logged in'})

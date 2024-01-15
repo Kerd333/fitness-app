@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { ApiError, AuthRepository, LoginUseCase, LoginUserDto, RegisterUseCase, RegisterUserDto } from "../../domain";
+import { Handler } from "../../config";
 
 // Definición de los controladores de autenticación
 
@@ -21,12 +22,7 @@ export class AuthController {
             res.cookie('JWT', user.token, {maxAge: 60*1000})
             res.json(user)
         } catch (error) {
-            if (error instanceof ApiError) {
-                return res.status(error.statusCode).json({error: error.message})
-            }
-            console.log(error)
-            console.log('Bad Error')
-            return res.status(500).json({error: 'Internal Server Error'})
+            Handler.error(error, res)
         }
     }
     
@@ -42,12 +38,7 @@ export class AuthController {
             res.cookie('JWT', user.token, {maxAge: 60*1000});
             res.json(user);
         } catch (error) {
-            if (error instanceof ApiError) {
-                return res.status(error.statusCode).json({error: error.message})
-            }
-            console.log(error)
-            console.log('Bad Error')
-            return res.status(500).json({error: 'Internal Server Error'})
+            Handler.error(error, res)
         }
     }
 }

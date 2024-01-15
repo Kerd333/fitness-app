@@ -15,7 +15,7 @@ export class RegisterUserDto {
 
         if (!name) throw ApiError.badRequest('Missing name');
         if (!email) throw ApiError.badRequest('Missing email');
-        if (!Validators.email.test(email)) throw ApiError.badRequest('Invalid email');
+        if (!Validators.email(email)) throw ApiError.badRequest('Invalid email');
         if (!password) throw ApiError.badRequest('Missing password');
         if (password.length < 6) throw ApiError.badRequest('Password too short');
 

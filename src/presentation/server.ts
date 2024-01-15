@@ -21,7 +21,7 @@ export class Server {
 
         this.app.use(cookieParser())
         this.app.use(express.json())
-        this.app.use(this.routes)
+        this.app.use('/api/', this.routes)
 
         this.app.listen(this.port, () => console.log(`Server running on port ${this.port}`))
     }
