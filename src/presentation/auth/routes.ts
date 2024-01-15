@@ -17,6 +17,14 @@ export class AuthRoutes {
         const authController = new AuthController(authRepository)
 
         router.post('/register', authController.registerUser)
+        router.post('/login', authController.loginUser)
+
+
+        router.get('/login-test', (req, res) => {
+            console.log(req.cookies)
+            if (!req.cookies.JWT) return res.json({error: 'Not logged in'})
+            res.json(req.cookies.JWT)
+        })
 
         return router
     }
