@@ -34,6 +34,6 @@ model TrainSession {
   category  String
   exercises Exercise[]
   date      DateTime    @default(now())
-  owner     User        @relation(fields: [ownerId], references: [id])
-  ownerId   Int
+  user      User        @relation(fields: [userId], references: [id])
+  userId    Int
 }
