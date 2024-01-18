@@ -11,19 +11,15 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
 
     addSession = async (addSessionDto: AddSessionDto): Promise<AddSessionDto> => {
 
-        const { category, exercises, date, owner } = addSessionDto
+        const { category, exercises, date, userId } = addSessionDto
 
-        const updatedOwner = await this.prisma.user.update({
-            where: {
-                name: owner
-            },
+        const newSession = await this.prisma.trainSession.create({
             data: {
-                trainSessions: {
-                    create: {
-                        category,
-                        date
+                    category,
+                    date,
+                    user: {
+                        connect: {id: userId}
                     }
-                }
             }
         })
 
