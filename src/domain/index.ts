@@ -10,3 +10,7 @@ export * from './dtos/training/add-session.dto';
 export * from './repositories/training.repository';
 export * from './datasources/training.datasource';
 export * from './use-cases/training/addSession.use-case';
+export * from './dtos/training/add-exercise.dto'
+export * from './use-cases/training/addExercise.use-case'
+
+//Crear mas archivos de barril para achicar esto
