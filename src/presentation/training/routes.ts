@@ -17,8 +17,10 @@ export class TrainingRoutes {
         const trainingRepository = new TrainingRepositoryImpl(trainingDatasource);
         const trainingController = new TrainingController(trainingRepository);
 
-        router.post('/sessions/', TrainingMiddleware.validateLogin, trainingController.addSession)
-        router.post('/exercises/', TrainingMiddleware.validateLogin, trainingController.addExercise)
+        router.use(TrainingMiddleware.validateLogin)
+
+        router.post('/sessions/', trainingController.addSession)
+        router.post('/exercises/', trainingController.addExercise)
 
         return router
     }
