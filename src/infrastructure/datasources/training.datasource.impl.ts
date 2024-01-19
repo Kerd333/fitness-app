@@ -1,13 +1,29 @@
 import { PrismaClient } from "@prisma/client";
-import { AddExerciseDto, AddSessionDto, ApiError, TrainingDatasource } from "../../domain";
+import { AddExerciseDto, AddSessionDto, ApiError, GetSessionsDto, SessionEntity, TrainingDatasource } from "../../domain";
 
-
+// Falta acomodar los elementos retornados
 
 export class TrainingDatasourceImpl implements TrainingDatasource {
 
     constructor(
         private readonly prisma: PrismaClient
     ){}
+
+    getSessions = async (getSessionsDto: GetSessionsDto): Promise<SessionEntity[]> => {
+        
+        const { userId } = getSessionsDto;
+
+        const sessions = await this.prisma.trainSession.findMany({
+            where: {
+                userId
+            },
+            include: {
+                exercises: true
+            }
+        })
+
+        return sessions
+    }
 
     addSession = async (addSessionDto: AddSessionDto): Promise<AddSessionDto> => {
 
