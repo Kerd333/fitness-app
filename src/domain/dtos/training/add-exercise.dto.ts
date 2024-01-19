@@ -7,7 +7,7 @@ export class AddExerciseDto {
         public reps: string,
         public weight: number,
         public sessionId: number | null,
-        public userId: number
+        public userId: number | null
     ) {}
 
     static create(object: {[key:string]: any}):AddExerciseDto {
