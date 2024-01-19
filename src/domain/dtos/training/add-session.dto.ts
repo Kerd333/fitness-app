@@ -1,10 +1,11 @@
 import { Validators } from "../../../config"
 import { ApiError } from "../../errors/api.error"
+import { AddExerciseDto } from "./add-exercise.dto"
 
 export class AddSessionDto {
     private constructor(
         public category: string,
-        public exercises: string[], // Esto debe ser un array de exercisesDto
+        public exercises: AddExerciseDto[],
         public date: Date,
         public userId: number
     ){}
@@ -15,6 +16,8 @@ export class AddSessionDto {
         if (!category) throw ApiError.badRequest('Missing training category!')
         if (!Validators.trainingCategory(category)) throw ApiError.badRequest('Wrong training category!')
 
-        return new AddSessionDto(category, exercises, date, userId)
+        const exerciseDtos = exercises.map((exercise: {[key: string]:any})  => AddExerciseDto.create(exercise))
+
+        return new AddSessionDto(category, exerciseDtos, date, userId)
     }
 }

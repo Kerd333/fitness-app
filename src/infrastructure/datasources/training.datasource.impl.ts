@@ -19,7 +19,13 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
                     date,
                     user: {
                         connect: {id: userId}
+                    },
+                    exercises: {
+                        create: exercises 
                     }
+            },
+            include: {
+                exercises: true,
             }
         })
 
@@ -28,6 +34,10 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
 
     addExercise = async (addExerciseDto: AddExerciseDto): Promise<AddExerciseDto> => {
         const { name, reps, weight, sessionId, userId } = addExerciseDto;
+
+        // Revisa si sessionId no es nulo.
+
+        if (!sessionId) throw ApiError.badRequest('Missing session id!');
 
         // Revisa en la DB si existe una sesion con el id sessionId.
 
@@ -43,12 +53,10 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
 
         if (trainSession.userId != userId) throw ApiError.unauthorized('You cannot edit this session!')
 
-        const codedReps = reps.join(',');
-
         const newExercise = await this.prisma.exercise.create({
             data: {
                 name,
-                reps: codedReps,
+                reps,
                 weight,
                 trainSession: {
                     connect: {id: sessionId}
