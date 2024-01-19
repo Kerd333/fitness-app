@@ -24,7 +24,7 @@ model Exercise {
   id            Int           @id @default(autoincrement())
   name          String
   reps          String
-  weight        Int?
+  weight        Int           @default(0)
   trainSession  TrainSession  @relation(fields: [sessionId], references: [id])
   sessionId     Int
 }
