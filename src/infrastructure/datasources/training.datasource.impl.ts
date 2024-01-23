@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { AddExerciseDto, AddSessionDto, ApiError, GetSessionsDto, SessionEntity, TrainingDatasource } from "../../domain";
+import { AddExerciseDto, AddSessionDto, ApiError, ExerciseEntity, GetSessionsDto, SessionEntity, TrainingDatasource } from "../../domain";
 
 // Falta acomodar los elementos retornados
 
@@ -25,7 +25,7 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
         return sessions
     }
 
-    addSession = async (addSessionDto: AddSessionDto): Promise<AddSessionDto> => {
+    addSession = async (addSessionDto: AddSessionDto): Promise<SessionEntity> => {
 
         const { category, exercises, date, userId } = addSessionDto;
 
@@ -45,10 +45,10 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
             }
         })
 
-        return addSessionDto
+        return newSession
     }
 
-    addExercise = async (addExerciseDto: AddExerciseDto): Promise<AddExerciseDto> => {
+    addExercise = async (addExerciseDto: AddExerciseDto): Promise<ExerciseEntity> => {
         const { name, reps, weight, sessionId, userId } = addExerciseDto;
 
         // Revisa si sessionId no es nulo.
@@ -80,6 +80,6 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
             }
         })
 
-        return addExerciseDto
+        return newExercise
     }
 }
