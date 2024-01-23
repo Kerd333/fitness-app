@@ -11,11 +11,11 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
 
     getSessions = async (getSessionsDto: GetSessionsDto): Promise<SessionEntity[]> => {
         
-        const { userId } = getSessionsDto;
+        const { loggedUserId } = getSessionsDto;
 
         const sessions = await this.prisma.trainSession.findMany({
             where: {
-                userId
+                userId: loggedUserId
             },
             include: {
                 exercises: true
@@ -27,14 +27,14 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
 
     addSession = async (addSessionDto: AddSessionDto): Promise<SessionEntity> => {
 
-        const { category, exercises, date, userId } = addSessionDto;
+        const { category, exercises, date, loggedUserId } = addSessionDto;
 
         const newSession = await this.prisma.trainSession.create({
             data: {
                     category,
                     date,
                     user: {
-                        connect: {id: userId}
+                        connect: {id: loggedUserId}
                     },
                     exercises: {
                         create: exercises 
@@ -49,7 +49,7 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
     }
 
     addExercise = async (addExerciseDto: AddExerciseDto): Promise<ExerciseEntity> => {
-        const { name, reps, weight, sessionId, userId } = addExerciseDto;
+        const { name, reps, weight, sessionId, loggedUserId } = addExerciseDto;
 
         // Revisa si sessionId no es nulo.
 
@@ -67,7 +67,7 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
 
         // Revisa si el usuario de la sesión es el mismo que el usuario logeado.
 
-        if (trainSession.userId != userId) throw ApiError.unauthorized('You cannot edit this session!')
+        if (trainSession.userId != loggedUserId) throw ApiError.unauthorized('You cannot edit this session!')
 
         const newExercise = await this.prisma.exercise.create({
             data: {
@@ -84,7 +84,7 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
     }
 
     editExercise = async (editExerciseDto: EditExerciseDto): Promise<ExerciseEntity> => {
-        const { name, reps, weight, exerciseId, userId } = editExerciseDto;
+        const { name, reps, weight, exerciseId, loggedUserId } = editExerciseDto;
 
         // Revisa si el id proporcionado es correcto
 
@@ -106,7 +106,7 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
 
         if (!trainSession) throw new Error('Exercise has a reference to a non existent train session')
 
-        if (trainSession.userId != userId) throw ApiError.unauthorized('You cannot edit this exercise')
+        if (trainSession.userId != loggedUserId) throw ApiError.unauthorized('You cannot edit this exercise')
 
         const editedExercise = await this.prisma.exercise.update({
             where: {

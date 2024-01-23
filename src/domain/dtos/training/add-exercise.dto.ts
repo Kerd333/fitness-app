@@ -7,17 +7,17 @@ export class AddExerciseDto {
         public reps: string,
         public weight: number,
         public sessionId: number | null,
-        public userId: number | null
+        public loggedUserId: number | null
     ) {}
 
     static create(object: {[key:string]: any}):AddExerciseDto {
-        const { name, repList, weight, sessionId, userId } = object
+        const { name, repList, weight, sessionId, loggedUserId } = object
 
         if (!name) throw ApiError.badRequest('Missing exercise name!');
         if (!repList) throw ApiError.badRequest('Missing rep list!');
         
         const reps = repList.join(',');
 
-        return new AddExerciseDto(name, reps, weight, sessionId, userId)
+        return new AddExerciseDto(name, reps, weight, sessionId, loggedUserId)
     }
 }

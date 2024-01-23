@@ -2,12 +2,12 @@
 
 export class GetSessionsDto {
     private constructor (
-        public userId: number
+        public loggedUserId: number
     ){}
 
     static create(object: {[key:string]: any}):GetSessionsDto {
-        const { userId } = object;
+        const { loggedUserId } = object;
 
-        return new GetSessionsDto(userId)
+        return new GetSessionsDto(loggedUserId)
     }
 }

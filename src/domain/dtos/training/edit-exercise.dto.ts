@@ -6,10 +6,10 @@ export class EditExerciseDto {
         public reps: string | undefined,
         public weight: number | undefined,
         public exerciseId: number,
-        public userId: number
+        public loggedUserId: number
     ) {}
     static create(object: { [ key:string ] : any }): EditExerciseDto {
-        const { name, repList, weight, exerciseId, userId } = object;
+        const { name, repList, weight, exerciseId, loggedUserId } = object;
         let reps;
 
         if (repList instanceof Array) {
@@ -19,6 +19,6 @@ export class EditExerciseDto {
         if (!exerciseId) throw ApiError.badRequest('ID is missing!')
         if (!name && !reps && !weight) throw ApiError.badRequest('No changes submitted!')
 
-        return new EditExerciseDto(name, reps, weight, exerciseId, userId)
+        return new EditExerciseDto(name, reps, weight, exerciseId, loggedUserId)
     }
 }

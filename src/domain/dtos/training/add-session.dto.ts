@@ -7,17 +7,17 @@ export class AddSessionDto {
         public category: string,
         public exercises: AddExerciseDto[],
         public date: Date,
-        public userId: number
+        public loggedUserId: number
     ){}
     static create(object: {[key: string]:any}):AddSessionDto {
 
-        const {category, exercises, date, userId} = object
+        const {category, exercises, date, loggedUserId} = object
 
         if (!category) throw ApiError.badRequest('Missing training category!')
         if (!Validators.trainingCategory(category)) throw ApiError.badRequest('Wrong training category!')
 
         const exerciseDtos = exercises.map((exercise: {[key: string]:any})  => AddExerciseDto.create(exercise))
 
-        return new AddSessionDto(category, exerciseDtos, date, userId)
+        return new AddSessionDto(category, exerciseDtos, date, loggedUserId)
     }
 }

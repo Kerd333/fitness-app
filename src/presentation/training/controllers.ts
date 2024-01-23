@@ -10,9 +10,9 @@ export class TrainingController {
 
     getSessions = async(req: Request, res: Response) => {
         try {
-            const userId = req.body.user.id;
+            const loggedUserId = req.body.user.id;
 
-            const getSessionsDto = GetSessionsDto.create({userId})
+            const getSessionsDto = GetSessionsDto.create({loggedUserId})
             const getSessionsUseCase = new GetSessionsUseCase(this.trainingRepository);
             const sessions = await getSessionsUseCase.execute(getSessionsDto);
             res.json(sessions)
@@ -24,9 +24,9 @@ export class TrainingController {
     addSession = async(req: Request, res: Response) => {
         try {
             const { category, exercises = [], date = new Date(), user } = req.body;
-            const userId = user.id
+            const loggedUserId = user.id
             // Puede tirar error por suministrar datos incorrectos
-            const addSessionDto = AddSessionDto.create({category, exercises, date, userId});
+            const addSessionDto = AddSessionDto.create({category, exercises, date, loggedUserId});
             const addSessionUseCase = new AddSessionUseCase(this.trainingRepository);
             const session = await addSessionUseCase.execute(addSessionDto);
             res.json(session)
@@ -38,9 +38,9 @@ export class TrainingController {
     addExercise = async(req: Request, res: Response) => {
         try {
             const { name, repList, weight = 0, sessionId, user } = req.body;
-            const userId = user.id
+            const loggedUserId = user.id
             // Puede tirar error por suministrar datos incorrectos
-            const addExerciseDto = AddExerciseDto.create({name, repList, weight, sessionId, userId});
+            const addExerciseDto = AddExerciseDto.create({name, repList, weight, sessionId, loggedUserId});
             // Puede tirar error si el sessionId es incorrecto, o si el sessionId no corresponde
             // al usuario logeado
             const addExerciseUseCase = new AddExerciseUseCase(this.trainingRepository);
@@ -54,10 +54,10 @@ export class TrainingController {
     editExercise = async(req: Request, res: Response) => {
         try {
             const { name, repList, weight, user } = req.body;
-            const userId = user.id;
+            const loggedUserId = user.id;
             const exerciseId = parseInt(req.params.exerciseId)
             // Puede tirar error por suministrar datos incorrectos
-            const editExerciseDto = EditExerciseDto.create({name, repList, weight, exerciseId, userId});
+            const editExerciseDto = EditExerciseDto.create({name, repList, weight, exerciseId, loggedUserId});
             // Puede tirar error si el exerciseId es incorrecto, o si su sesión no existe o no corresponde
             // al usuario logeado
             const editExerciseUseCase = new EditExerciseUseCase(this.trainingRepository);
