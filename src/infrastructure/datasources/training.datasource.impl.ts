@@ -1,5 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { AddExerciseDto, AddSessionDto, ApiError, ExerciseEntity, GetSessionsDto, SessionEntity, TrainingDatasource } from "../../domain";
+import { ExerciseMapper } from "../mappers/exercise.mapper";
+import { SessionMapper } from "../mappers/session.mapper";
 
 // Falta acomodar los elementos retornados
 
@@ -22,7 +24,7 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
             }
         })
 
-        return sessions
+        return sessions.map((session) => SessionMapper.toSessionEntity(session))
     }
 
     addSession = async (addSessionDto: AddSessionDto): Promise<SessionEntity> => {
@@ -45,7 +47,7 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
             }
         })
 
-        return newSession
+        return SessionMapper.toSessionEntity(newSession);
     }
 
     addExercise = async (addExerciseDto: AddExerciseDto): Promise<ExerciseEntity> => {
@@ -80,6 +82,6 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
             }
         })
 
-        return newExercise
+        return ExerciseMapper.toExerciseEntity(newExercise)
     }
 }
