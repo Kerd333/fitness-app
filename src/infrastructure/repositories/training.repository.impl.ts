@@ -1,4 +1,4 @@
-import { AddExerciseDto, AddSessionDto, ExerciseEntity, GetSessionsDto, SessionEntity, TrainingDatasource, TrainingRepository } from "../../domain";
+import { AddExerciseDto, AddSessionDto, EditExerciseDto, ExerciseEntity, GetSessionsDto, SessionEntity, TrainingDatasource, TrainingRepository } from "../../domain";
 
 
 
@@ -18,5 +18,9 @@ export class TrainingRepositoryImpl implements TrainingRepository {
 
     addExercise(addExerciseDto: AddExerciseDto): Promise<ExerciseEntity> {
         return this.trainingDatasource.addExercise(addExerciseDto)
+    }
+
+    editExercise(editExerciseDto: EditExerciseDto): Promise<ExerciseEntity> {
+        return this.trainingDatasource.editExercise(editExerciseDto)
     }
 }

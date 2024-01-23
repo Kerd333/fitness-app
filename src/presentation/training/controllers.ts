@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Handler } from "../../config";
-import { AddExerciseDto, AddExerciseUseCase, AddSessionDto, AddSessionUseCase, GetSessionsDto, GetSessionsUseCase, TrainingRepository } from "../../domain";
+import { AddExerciseDto, AddExerciseUseCase, AddSessionDto, AddSessionUseCase, EditExerciseDto, EditExerciseUseCase, GetSessionsDto, GetSessionsUseCase, TrainingRepository } from "../../domain";
 
 
 export class TrainingController {
@@ -45,6 +45,23 @@ export class TrainingController {
             // al usuario logeado
             const addExerciseUseCase = new AddExerciseUseCase(this.trainingRepository);
             const exercise = await addExerciseUseCase.execute(addExerciseDto);
+            res.json(exercise)
+        } catch (error) {
+            Handler.error(error, res)
+        }
+    }
+
+    editExercise = async(req: Request, res: Response) => {
+        try {
+            const { name, repList, weight, user } = req.body;
+            const userId = user.id;
+            const exerciseId = parseInt(req.params.exerciseId)
+            // Puede tirar error por suministrar datos incorrectos
+            const editExerciseDto = EditExerciseDto.create({name, repList, weight, exerciseId, userId});
+            // Puede tirar error si el exerciseId es incorrecto, o si su sesión no existe o no corresponde
+            // al usuario logeado
+            const editExerciseUseCase = new EditExerciseUseCase(this.trainingRepository);
+            const exercise = await editExerciseUseCase.execute(editExerciseDto);
             res.json(exercise)
         } catch (error) {
             Handler.error(error, res)
