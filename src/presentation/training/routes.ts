@@ -23,6 +23,7 @@ export class TrainingRoutes {
         router.post('/sessions/', trainingController.addSession)
         router.post('/exercises/', trainingController.addExercise)
         router.post('/exercises/:exerciseId', trainingController.editExercise)
+        router.delete('/exercises/:exerciseId', trainingController.deleteExercise)
 
         return router
     }
