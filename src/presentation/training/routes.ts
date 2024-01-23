@@ -21,7 +21,7 @@ export class TrainingRoutes {
 
         router.get('/sessions/', trainingController.getSessions)
         router.post('/sessions/', trainingController.addSession)
-        router.post('/exercises/', trainingController.addExercise)
+        router.post('/sessions/:sessionId', trainingController.addExercise)
         router.post('/exercises/:exerciseId', trainingController.editExercise)
         router.delete('/exercises/:exerciseId', trainingController.deleteExercise)
 

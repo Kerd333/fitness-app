@@ -37,8 +37,9 @@ export class TrainingController {
 
     addExercise = async(req: Request, res: Response) => {
         try {
-            const { name, repList, weight = 0, sessionId, user } = req.body;
+            const { name, repList, weight = 0, user } = req.body;
             const loggedUserId = user.id
+            const sessionId = parseInt(req.params.sessionId)
             // Puede tirar error por suministrar datos incorrectos
             const addExerciseDto = AddExerciseDto.create({name, repList, weight, sessionId, loggedUserId});
             // Puede tirar error si el sessionId es incorrecto, o si el sessionId no corresponde
