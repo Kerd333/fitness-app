@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Handler } from "../../config";
-import { AddExerciseDto, AddExerciseUseCase, AddSessionDto, AddSessionUseCase, DeleteExerciseDto, DeleteExerciseUseCase, EditExerciseDto, EditExerciseUseCase, GetUserSessionsDto, TrainingRepository, GetUserSessionsUseCase, DeleteSessionUseCase, EditSessionDto, EditSessionUseCase } from "../../domain";
+import { AddExerciseDto, AddExerciseUseCase, AddSessionDto, AddSessionUseCase, DeleteExerciseDto, DeleteExerciseUseCase, EditExerciseDto, EditExerciseUseCase, GetUserSessionsDto, TrainingRepository, GetUserSessionsUseCase, DeleteSessionUseCase, EditSessionDto, EditSessionUseCase, GetSessionByIdUseCase } from "../../domain";
 
 
 export class TrainingController {
@@ -16,6 +16,19 @@ export class TrainingController {
             const getUserSessionsUseCase = new GetUserSessionsUseCase(this.trainingRepository);
             const sessions = await getUserSessionsUseCase.execute(getUserSessionsDto);
             res.json(sessions)
+        } catch (error) {
+            Handler.error(error, res)
+        }
+    }
+
+    getSessionById = async (req: Request, res: Response) => {
+        try {
+            const sessionId = parseInt(req.params.sessionId)
+
+            // Puede tirar error por suministrar un sessionId erróneo
+            const getSessionByIdUseCase = new GetSessionByIdUseCase(this.trainingRepository);
+            const session = await getSessionByIdUseCase.execute(sessionId);
+            res.json(session)
         } catch (error) {
             Handler.error(error, res)
         }

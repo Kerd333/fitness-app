@@ -12,6 +12,10 @@ export class TrainingRepositoryImpl implements TrainingRepository {
         return this.trainingDatasource.getUserSessions(getUserSessionsDto)
     }
 
+    getSessionById(sessionId: number): Promise<SessionEntity> {
+        return this.trainingDatasource.getSessionById(sessionId)
+    }
+
     addSession(addSessionDto: AddSessionDto): Promise<SessionEntity> {
         return this.trainingDatasource.addSession(addSessionDto)
     }

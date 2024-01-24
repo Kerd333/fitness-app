@@ -3,6 +3,8 @@ import { AddExerciseDto, AddSessionDto, ApiError, DeleteExerciseDto, EditExercis
 import { ExerciseMapper } from "../mappers/exercise.mapper";
 import { SessionMapper } from "../mappers/session.mapper";
 
+// TODO: Replace 400 with 404 where applicable
+
 export class TrainingDatasourceImpl implements TrainingDatasource {
 
     constructor(
@@ -23,6 +25,21 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
         })
 
         return sessions.map((session) => SessionMapper.toSessionEntity(session))
+    }
+
+    getSessionById = async (sessionId: number): Promise<SessionEntity> => {
+        const session = await this.prisma.trainSession.findFirst({
+            where: {
+                id: sessionId
+            },
+            include: {
+                exercises: true
+            }
+        })
+
+        if (!session) throw ApiError.notFound('Session doesn\'t exist')
+
+        return SessionMapper.toSessionEntity(session)
     }
 
     addSession = async (addSessionDto: AddSessionDto): Promise<SessionEntity> => {
