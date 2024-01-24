@@ -19,7 +19,7 @@ export class TrainingRoutes {
 
         router.use(TrainingMiddleware.validateLogin)
 
-        router.get('/sessions/', trainingController.getSessions)
+        router.get('/sessions/', trainingController.getUserSessions)
         router.post('/sessions/', trainingController.addSession)
         router.post('/sessions/:sessionId', trainingController.addExercise)
         router.post('/exercises/:exerciseId', trainingController.editExercise)

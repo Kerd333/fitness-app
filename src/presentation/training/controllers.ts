@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Handler } from "../../config";
-import { AddExerciseDto, AddExerciseUseCase, AddSessionDto, AddSessionUseCase, DeleteExerciseDto, DeleteExerciseUseCase, EditExerciseDto, EditExerciseUseCase, GetSessionsDto, GetSessionsUseCase, TrainingRepository } from "../../domain";
+import { AddExerciseDto, AddExerciseUseCase, AddSessionDto, AddSessionUseCase, DeleteExerciseDto, DeleteExerciseUseCase, EditExerciseDto, EditExerciseUseCase, GetUserSessionsDto, TrainingRepository, GetUserSessionsUseCase } from "../../domain";
 
 
 export class TrainingController {
@@ -8,13 +8,13 @@ export class TrainingController {
         private readonly trainingRepository: TrainingRepository
     ){}
 
-    getSessions = async(req: Request, res: Response) => {
+    getUserSessions = async(req: Request, res: Response) => {
         try {
             const loggedUserId = req.body.user.id;
 
-            const getSessionsDto = GetSessionsDto.create({loggedUserId})
-            const getSessionsUseCase = new GetSessionsUseCase(this.trainingRepository);
-            const sessions = await getSessionsUseCase.execute(getSessionsDto);
+            const getUserSessionsDto = GetUserSessionsDto.create({loggedUserId})
+            const getUserSessionsUseCase = new GetUserSessionsUseCase(this.trainingRepository);
+            const sessions = await getUserSessionsUseCase.execute(getUserSessionsDto);
             res.json(sessions)
         } catch (error) {
             Handler.error(error, res)

@@ -2,7 +2,7 @@ import { AddExerciseDto } from "../dtos/training/add-exercise.dto";
 import { AddSessionDto } from "../dtos/training/add-session.dto";
 import { DeleteExerciseDto } from "../dtos/training/delete-exercise.dto";
 import { EditExerciseDto } from "../dtos/training/edit-exercise.dto";
-import { GetSessionsDto } from "../dtos/training/get-sessions.dto";
+import { GetUserSessionsDto } from "../dtos/training/get-user-sessions.dto";
 import { ExerciseEntity } from "../entities/exercise.entity";
 import { SessionEntity } from "../entities/session.entity";
 
@@ -10,7 +10,7 @@ import { SessionEntity } from "../entities/session.entity";
 
 export abstract class TrainingRepository {
 
-    abstract getSessions(getSessionsDto: GetSessionsDto): Promise<SessionEntity[]>
+    abstract getUserSessions(getUserSessionsDto: GetUserSessionsDto): Promise<SessionEntity[]>
 
     abstract addSession(addSessionDto: AddSessionDto): Promise<SessionEntity>
 

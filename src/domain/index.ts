@@ -14,8 +14,8 @@ export * from './dtos/training/add-exercise.dto';
 export * from './use-cases/training/addExercise.use-case';
 export * from './entities/exercise.entity';
 export * from './entities/session.entity';
-export * from './use-cases/training/getSessions.use-case';
-export * from './dtos/training/get-sessions.dto';
+export * from './use-cases/training/getUserSessions.use-case';
+export * from './dtos/training/get-user-sessions.dto';
 export * from './dtos/training/edit-exercise.dto';
 export * from './use-cases/training/editExercise.use-case'
 export * from './dtos/training/delete-exercise.dto';

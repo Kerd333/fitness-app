@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { AddExerciseDto, AddSessionDto, ApiError, DeleteExerciseDto, EditExerciseDto, ExerciseEntity, GetSessionsDto, SessionEntity, TrainingDatasource } from "../../domain";
+import { AddExerciseDto, AddSessionDto, ApiError, DeleteExerciseDto, EditExerciseDto, ExerciseEntity, GetUserSessionsDto, SessionEntity, TrainingDatasource } from "../../domain";
 import { ExerciseMapper } from "../mappers/exercise.mapper";
 import { SessionMapper } from "../mappers/session.mapper";
 
@@ -9,9 +9,9 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
         private readonly prisma: PrismaClient
     ){}
 
-    getSessions = async (getSessionsDto: GetSessionsDto): Promise<SessionEntity[]> => {
+    getUserSessions = async (getUserSessionsDto: GetUserSessionsDto): Promise<SessionEntity[]> => {
         
-        const { loggedUserId } = getSessionsDto;
+        const { loggedUserId } = getUserSessionsDto;
 
         const sessions = await this.prisma.trainSession.findMany({
             where: {
