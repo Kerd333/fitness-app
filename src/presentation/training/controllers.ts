@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Handler } from "../../config";
-import { AddExerciseDto, AddExerciseUseCase, AddSessionDto, AddSessionUseCase, DeleteExerciseDto, DeleteExerciseUseCase, EditExerciseDto, EditExerciseUseCase, GetUserSessionsDto, TrainingRepository, GetUserSessionsUseCase, DeleteSessionUseCase, EditSessionDto, EditSessionUseCase, GetSessionByIdUseCase } from "../../domain";
+import { AddExerciseDto, AddExerciseUseCase, AddSessionDto, AddSessionUseCase, DeleteExerciseDto, DeleteExerciseUseCase, EditExerciseDto, EditExerciseUseCase, GetUserSessionsDto, TrainingRepository, GetUserSessionsUseCase, DeleteSessionUseCase, EditSessionDto, EditSessionUseCase, GetSessionByIdUseCase, GetExerciseByIdUseCase } from "../../domain";
 
 
 export class TrainingController {
@@ -29,6 +29,19 @@ export class TrainingController {
             const getSessionByIdUseCase = new GetSessionByIdUseCase(this.trainingRepository);
             const session = await getSessionByIdUseCase.execute(sessionId);
             res.json(session)
+        } catch (error) {
+            Handler.error(error, res)
+        }
+    }
+
+    getExerciseById = async (req: Request, res: Response) => {
+        try {
+            const exerciseId = parseInt(req.params.exerciseId)
+
+            // Puede tirar error por suministrar un exerciseId erróneo
+            const getExerciseByIdUseCase = new GetExerciseByIdUseCase(this.trainingRepository);
+            const exercise = await getExerciseByIdUseCase.execute(exerciseId);
+            res.json(exercise)
         } catch (error) {
             Handler.error(error, res)
         }

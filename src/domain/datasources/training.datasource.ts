@@ -15,6 +15,8 @@ export abstract class TrainingDatasource {
 
     abstract getSessionById(sessionId: number): Promise<SessionEntity>
 
+    abstract getExerciseById(exerciseId: number): Promise<ExerciseEntity>
+
     abstract addSession(addSessionDto: AddSessionDto): Promise<SessionEntity>
 
     abstract addExercise(addExerciseDto: AddExerciseDto): Promise<ExerciseEntity>

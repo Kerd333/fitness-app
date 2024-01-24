@@ -42,6 +42,18 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
         return SessionMapper.toSessionEntity(session)
     }
 
+    getExerciseById = async (exerciseId: number): Promise<ExerciseEntity> => {
+        const exercise = await this.prisma.exercise.findFirst({
+            where: {
+                id: exerciseId
+            }
+        })
+
+        if (!exercise) throw ApiError.notFound('Exercise doesn\'t exist')
+
+        return ExerciseMapper.toExerciseEntity(exercise)
+    }
+
     addSession = async (addSessionDto: AddSessionDto): Promise<SessionEntity> => {
 
         const { category, exercises, date, loggedUserId } = addSessionDto;
