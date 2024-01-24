@@ -24,6 +24,7 @@ export * from './use-cases/training/deleteSession.use-case';
 export * from './dtos/training/edit-session.dto';
 export * from './use-cases/training/editSession.use-case';
 export * from './use-cases/training/getSessionById.use-case';
-export * from './use-cases/training/getExerciseById.use-case'
+export * from './use-cases/training/getExerciseById.use-case';
+export * from './use-cases/training/getAllSessions.use-case';
 
 //Crear mas archivos de barril para achicar esto

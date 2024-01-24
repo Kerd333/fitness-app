@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Handler } from "../../config";
-import { AddExerciseDto, AddExerciseUseCase, AddSessionDto, AddSessionUseCase, DeleteExerciseDto, DeleteExerciseUseCase, EditExerciseDto, EditExerciseUseCase, GetUserSessionsDto, TrainingRepository, GetUserSessionsUseCase, DeleteSessionUseCase, EditSessionDto, EditSessionUseCase, GetSessionByIdUseCase, GetExerciseByIdUseCase } from "../../domain";
+import { AddExerciseDto, AddExerciseUseCase, AddSessionDto, AddSessionUseCase, DeleteExerciseDto, DeleteExerciseUseCase, EditExerciseDto, EditExerciseUseCase, GetUserSessionsDto, TrainingRepository, GetUserSessionsUseCase, DeleteSessionUseCase, EditSessionDto, EditSessionUseCase, GetSessionByIdUseCase, GetExerciseByIdUseCase, GetAllSessionsUseCase } from "../../domain";
 
 
 export class TrainingController {
@@ -15,6 +15,16 @@ export class TrainingController {
             const getUserSessionsDto = GetUserSessionsDto.create({loggedUserId})
             const getUserSessionsUseCase = new GetUserSessionsUseCase(this.trainingRepository);
             const sessions = await getUserSessionsUseCase.execute(getUserSessionsDto);
+            res.json(sessions)
+        } catch (error) {
+            Handler.error(error, res)
+        }
+    }
+
+    getAllSessions = async(req: Request, res: Response) => {
+        try {
+            const getAllSessionsUseCase = new GetAllSessionsUseCase(this.trainingRepository);
+            const sessions = await getAllSessionsUseCase.execute();
             res.json(sessions)
         } catch (error) {
             Handler.error(error, res)

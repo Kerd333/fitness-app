@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { AddExerciseDto, AddSessionDto, ApiError, DeleteExerciseDto, EditExerciseDto, EditSessionDto, ExerciseEntity, GetUserSessionsDto, SessionEntity, TrainingDatasource } from "../../domain";
 import { ExerciseMapper } from "../mappers/exercise.mapper";
 import { SessionMapper } from "../mappers/session.mapper";
+import { Session } from "inspector";
 
 // TODO: Replace 400 with 404 where applicable
 
@@ -19,6 +20,16 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
             where: {
                 userId: loggedUserId
             },
+            include: {
+                exercises: true
+            }
+        })
+
+        return sessions.map((session) => SessionMapper.toSessionEntity(session))
+    }
+
+    getAllSessions = async (): Promise<SessionEntity[]> => {
+        const sessions = await this.prisma.trainSession.findMany({
             include: {
                 exercises: true
             }
