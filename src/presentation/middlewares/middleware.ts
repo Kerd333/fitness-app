@@ -2,10 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { ApiError, UserEntity } from "../../domain";
 import { Handler, JwtAdapter } from "../../config";
 
-
-// Implementación dummy. Asumo que está la cookie
-
-export class TrainingMiddleware {
+export class Middleware {
 
     static validateLogin = async (req: Request, res: Response, next: NextFunction) => {
         try {

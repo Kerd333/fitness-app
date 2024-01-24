@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { Router } from "express";
 import { TrainingController } from "./controllers";
 import { TrainingDatasourceImpl, TrainingRepositoryImpl } from "../../infrastructure";
-import { TrainingMiddleware } from "../middlewares/training.middleware";
+import { Middleware } from "../middlewares/middleware";
 
 // Todas estas rutas deben estar protegidas para evitar que las acceda alguien sin logearse
 
@@ -17,7 +17,7 @@ export class TrainingRoutes {
         const trainingRepository = new TrainingRepositoryImpl(trainingDatasource);
         const trainingController = new TrainingController(trainingRepository);
 
-        router.use(TrainingMiddleware.validateLogin)
+        router.use(Middleware.validateLogin)
 
         router.get('/sessions/', trainingController.getUserSessions)
         router.get('/sessions/all', trainingController.getAllSessions)
