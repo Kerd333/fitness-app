@@ -122,6 +122,33 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
         return ExerciseMapper.toExerciseEntity(editedExercise)
     }
 
+    deleteSession = async (sessionId: number, loggedUserId: number): Promise<boolean> => {
+        
+        // Revisa si el id proporcionado es correcto
+
+        const sessionToDelete = await this.prisma.trainSession.findFirst({
+            where: {
+                id: sessionId
+            }
+        })
+
+        if (!sessionToDelete) throw ApiError.badRequest('Incorrect session ID');
+
+        // Revisa si el usuario de la sesión es el mismo que el usuario logeado.
+
+        if (sessionToDelete.userId != loggedUserId) throw ApiError.unauthorized('You cannot edit this session!')
+
+        const deleteSession = await this.prisma.trainSession.delete({
+            where: {
+                id: sessionId
+            }
+        })
+        
+        return true
+    }
+
+    //TODO: Cambiar exercise a exerciseToDelete en deleteExercise
+
     deleteExercise = async (deleteExerciseDto: DeleteExerciseDto): Promise<boolean> => {
         const { exerciseId, loggedUserId } = deleteExerciseDto;
 

@@ -24,6 +24,10 @@ export class TrainingRepositoryImpl implements TrainingRepository {
         return this.trainingDatasource.editExercise(editExerciseDto)
     }
 
+    deleteSession(sessionId: number, loggedUserId: number): Promise<boolean> {
+        return this.trainingDatasource.deleteSession(sessionId, loggedUserId)
+    }
+
     deleteExercise(deleteExerciseDto: DeleteExerciseDto): Promise<boolean> {
         return this.trainingDatasource.deleteExercise(deleteExerciseDto)
     }

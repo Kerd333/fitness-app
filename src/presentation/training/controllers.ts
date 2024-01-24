@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Handler } from "../../config";
-import { AddExerciseDto, AddExerciseUseCase, AddSessionDto, AddSessionUseCase, DeleteExerciseDto, DeleteExerciseUseCase, EditExerciseDto, EditExerciseUseCase, GetUserSessionsDto, TrainingRepository, GetUserSessionsUseCase } from "../../domain";
+import { AddExerciseDto, AddExerciseUseCase, AddSessionDto, AddSessionUseCase, DeleteExerciseDto, DeleteExerciseUseCase, EditExerciseDto, EditExerciseUseCase, GetUserSessionsDto, TrainingRepository, GetUserSessionsUseCase, DeleteSessionUseCase } from "../../domain";
 
 
 export class TrainingController {
@@ -69,6 +69,21 @@ export class TrainingController {
         }
     }
 
+    deleteSession = async (req: Request, res: Response) => {
+        try {
+            const { user } = req.body;
+            const loggedUserId = user.id;
+            const sessionId = parseInt(req.params.sessionId);
+            // Puede tirar error si el sessionId es incorrecto, o no corresponde al usuario
+            // logeado
+            const deleteSessionUseCase = new DeleteSessionUseCase(this.trainingRepository);
+            const deleted = await deleteSessionUseCase.execute(sessionId, loggedUserId)
+            if (deleted) res.json({message: 'Session deleted sucessfully!'})
+        } catch (error) {
+            Handler.error(error, res)
+        }
+    }
+
     deleteExercise = async(req: Request, res: Response) => {
         try {
             const { user } = req.body;
@@ -80,6 +95,7 @@ export class TrainingController {
             // al usuario logeado
             const deleteExerciseUseCase = new DeleteExerciseUseCase(this.trainingRepository);
             const deleted = await deleteExerciseUseCase.execute(deleteExerciseDto);
+            // TODO: Ponerle un if (deleted) a esto
             res.json({message: 'Exercise deleted successfully!'})
         } catch (error) {
             Handler.error(error, res)

@@ -18,6 +18,8 @@ export abstract class TrainingDatasource {
 
     abstract editExercise(editExerciseDto: EditExerciseDto): Promise<ExerciseEntity>
 
+    abstract deleteSession(sessionId: number, loggedUserId: number): Promise<boolean>
+
     abstract deleteExercise(deleteExerciseDto: DeleteExerciseDto): Promise<boolean>
     
 }
