@@ -88,7 +88,7 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
             }
         })
 
-        if (!trainSession) throw ApiError.badRequest('Incorrect session Id!')
+        if (!trainSession) throw ApiError.notFound('Session doesn\'t exist!')
 
         // Revisa si el usuario de la sesión es el mismo que el usuario logeado.
 
@@ -120,7 +120,7 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
             }
         })
 
-        if (!sessionToEdit) throw ApiError.badRequest('Incorrect session id');
+        if (!sessionToEdit) throw ApiError.notFound('Session doesn\'t exist!')
 
         // Verifica si el usuario logeado es el mismo de la sesión
 
@@ -153,7 +153,7 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
             }
         })
 
-        if (!exercise) throw ApiError.badRequest('Incorrect exercise id');
+        if (!exercise) throw ApiError.notFound('Exercise doesn\'t exist!')
 
         // Verifica si el usuario logeado es el mismo del ejercicio
 
@@ -191,7 +191,7 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
             }
         })
 
-        if (!sessionToDelete) throw ApiError.badRequest('Incorrect session ID');
+        if (!sessionToDelete) throw ApiError.notFound('Session doesn\'t exist!')
 
         // Revisa si el usuario de la sesión es el mismo que el usuario logeado.
 
@@ -217,7 +217,7 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
             }
         })
 
-        if (!exerciseToDelete) throw ApiError.badRequest('Exercise doesn\'t exist!');
+        if (!exerciseToDelete) throw ApiError.notFound('Exercise doesn\'t exist!');
 
         // Verifica si el usuario logeado es el mismo del ejercicio
 
