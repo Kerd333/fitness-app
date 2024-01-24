@@ -22,6 +22,8 @@ export class TrainingRoutes {
         router.get('/sessions/', trainingController.getUserSessions)
         router.post('/sessions/', trainingController.addSession)
         router.post('/sessions/:sessionId/exercises', trainingController.addExercise)
+        //TODO: Se deberia poder editar los ejercicios editando una sesion.
+        router.post('/sessions/:sessionId', trainingController.editSession)
         router.post('/exercises/:exerciseId', trainingController.editExercise)
         router.delete('/sessions/:sessionId', trainingController.deleteSession)
         router.delete('/exercises/:exerciseId', trainingController.deleteExercise)

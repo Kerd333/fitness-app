@@ -21,5 +21,7 @@ export * from './use-cases/training/editExercise.use-case'
 export * from './dtos/training/delete-exercise.dto';
 export * from './use-cases/training/deleteExercise.use-case';
 export * from './use-cases/training/deleteSession.use-case';
+export * from './dtos/training/edit-session.dto';
+export * from './use-cases/training/editSession.use-case';
 
 //Crear mas archivos de barril para achicar esto

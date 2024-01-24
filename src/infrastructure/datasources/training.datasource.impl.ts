@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { AddExerciseDto, AddSessionDto, ApiError, DeleteExerciseDto, EditExerciseDto, ExerciseEntity, GetUserSessionsDto, SessionEntity, TrainingDatasource } from "../../domain";
+import { AddExerciseDto, AddSessionDto, ApiError, DeleteExerciseDto, EditExerciseDto, EditSessionDto, ExerciseEntity, GetUserSessionsDto, SessionEntity, TrainingDatasource } from "../../domain";
 import { ExerciseMapper } from "../mappers/exercise.mapper";
 import { SessionMapper } from "../mappers/session.mapper";
 
@@ -81,6 +81,40 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
         })
 
         return ExerciseMapper.toExerciseEntity(newExercise)
+    }
+
+    editSession = async (editSessionDto: EditSessionDto): Promise<SessionEntity> => {
+        
+        const { category, date, sessionId, loggedUserId } = editSessionDto;
+
+        // Revisa si el id proporcionado es correcto
+
+        const sessionToEdit = await this.prisma.trainSession.findFirst({
+            where: {
+                id: sessionId
+            }
+        })
+
+        if (!sessionToEdit) throw ApiError.badRequest('Incorrect session id');
+
+        // Verifica si el usuario logeado es el mismo de la sesión
+
+        if (sessionToEdit.userId != loggedUserId) throw ApiError.unauthorized('You cannot edit this exercise')
+
+        const editedSession = await this.prisma.trainSession.update({
+            where: {
+                id: sessionId
+            },
+            data: {
+                category,
+                date
+            },
+            include: {
+                exercises: true
+            }
+        })
+
+        return SessionMapper.toSessionEntity(editedSession)
     }
 
     editExercise = async (editExerciseDto: EditExerciseDto): Promise<ExerciseEntity> => {
