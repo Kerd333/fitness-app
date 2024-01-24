@@ -181,26 +181,24 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
         return true
     }
 
-    //TODO: Cambiar exercise a exerciseToDelete en deleteExercise
-
     deleteExercise = async (deleteExerciseDto: DeleteExerciseDto): Promise<boolean> => {
         const { exerciseId, loggedUserId } = deleteExerciseDto;
 
         // Revisa si el id proporcionado es correcto
 
-        const exercise = await this.prisma.exercise.findFirst({
+        const exerciseToDelete = await this.prisma.exercise.findFirst({
             where: {
                 id: exerciseId
             }
         })
 
-        if (!exercise) throw ApiError.badRequest('Incorrect exercise id');
+        if (!exerciseToDelete) throw ApiError.badRequest('Exercise doesn\'t exist!');
 
         // Verifica si el usuario logeado es el mismo del ejercicio
 
         const trainSession = await this.prisma.trainSession.findFirst({
             where: {
-                id: exercise.sessionId
+                id: exerciseToDelete.sessionId
             }
         })
 
