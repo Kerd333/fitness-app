@@ -80,10 +80,6 @@ export class TrainingDatasourceImpl implements TrainingDatasource {
     addExercise = async (addExerciseDto: AddExerciseDto): Promise<ExerciseEntity> => {
         const { name, reps, weight, sessionId, loggedUserId } = addExerciseDto;
 
-        // Revisa si sessionId no es nulo.
-
-        if (!sessionId) throw ApiError.badRequest('Missing session id!');
-
         // Revisa en la DB si existe una sesion con el id sessionId.
 
         const trainSession = await this.prisma.trainSession.findFirst({

@@ -6,7 +6,7 @@ export class AddExerciseDto {
         public name: string,
         public reps: string,
         public weight: number,
-        public sessionId: number | null,
+        public sessionId: number,
         public loggedUserId: number | null
     ) {}
 
