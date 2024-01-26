@@ -26,5 +26,9 @@ export * from './use-cases/training/editSession.use-case';
 export * from './use-cases/training/getSessionById.use-case';
 export * from './use-cases/training/getExerciseById.use-case';
 export * from './use-cases/training/getAllSessions.use-case';
+export * from './datasources/generation.datasource';
+export * from './repositories/generation.repository';
+export * from './use-cases/generation/generateSession.use-case';
+export * from './entities/processed-exercise.entity';
 
 //Crear mas archivos de barril para achicar esto

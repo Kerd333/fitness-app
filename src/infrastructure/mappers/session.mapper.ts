@@ -2,7 +2,7 @@ import { SessionEntity } from "../../domain";
 import { ExerciseInDb, ExerciseMapper } from "./exercise.mapper";
 
 
-interface SessionInDb {
+export interface SessionInDb {
     id: number,
     category: string,
     exercises: ExerciseInDb[],
